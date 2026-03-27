@@ -2,14 +2,13 @@ import ChatbotIcon from './components/ChatbotIcon';
 
 const App = () => {
   return (
-    <div className='container'>
-      <div className='chat-header'>
+    <div className="container">
+      <div className="chat-header">
         <div className="header-info">
-          <ChatbotIcon/>
-          <h2 className="logo-text">
-            Chatbot
-          </h2>
+          <ChatbotIcon />
+          <h2 className="logo-text">Chatbot</h2>
         </div>
+        <button className="btn btn-primary material-symbols-rounded">keyboard_arrow_down</button>
       </div>
     </div>
   );
