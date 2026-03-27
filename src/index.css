@@ -27,6 +27,10 @@ body{
   border-radius: 50%;
   padding: 6px;
 }
+.chat-body{
+  scrollbar-width: thin;
+  scrollbar-color: #DDD3f9 transparent;
+}
 
 .chat-body .bot-message svg{
   width: 35px;
