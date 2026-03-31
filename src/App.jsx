@@ -5,6 +5,7 @@ import ChatMessage from './components/ChatMessage';
 
 const App = () => {
   const [chatHistory, setChatHistory] = useState([]);
+  const [showChatbot, setShowChatbot] = useState(false);
   const chatBodyRef = useRef();
 
   const generateBotResponse = async history => {
@@ -63,23 +64,30 @@ const App = () => {
 
 
   return (
-    <div className="container mx-auto">
+    <div className={`container mx-auto ${showChatbot ? 'show-chatbot' : ''}`}>
       {/* toggle button */}
-      <button id="chatbot-toggler">
+      <button
+        onClick={() => setShowChatbot(show => !show)}
+        id="chatbot-toggler"
+      >
         <span className="material-symbols-rounded">mode_comment</span>
         <span className="material-symbols-rounded">close</span>
       </button>
 
-      <div className="chatbot-popup relative bg-white w-[420px] rounded-2xl shadow-xl overflow-hidden">
+      {/* chatbot-popup */}
+      <div className="chatbot-popup bg-white w-[350px] md:w-[420px] shadow-xl overflow-y-auto">
         {/* chatbot header */}
-        <header className="chat-header flex bg-[#6d4fc2] py-4 px-6 items-center justify-between">
+        <header className="chat-header flex bg-[#6d4fc2] py-4 px-6 items-center justify-between shrink-0">
           <div className="header-info flex gap-2.5 items-center">
             <ChatbotIcon />
             <h2 className="logo-text text-white font-semibold text-[22px]">
               Chatbot
             </h2>
           </div>
-          <button className="material-symbols-rounded h-10 w-10 border-0 outline-0 text-3xl text-white bg-transparent pt-0.5 -mr-2.5 cursor-pointer flex items-center justify-center rounded-full hover:bg-[#593bab] transition-all duration-[0.2s] ease-in-out">
+          <button
+            onClick={() => setShowChatbot(false)}
+            className="material-symbols-rounded h-10 w-10 text-3xl text-white bg-transparent flex items-center justify-center rounded-full hover:bg-[#593bab] transition-all"
+          >
             keyboard_arrow_down
           </button>
         </header>
@@ -87,22 +95,21 @@ const App = () => {
         {/* chatbot body */}
         <main
           ref={chatBodyRef}
-          className="chat-body mb-24 pt-[25px] px-[22px] h-[460px] overflow-y-auto flex flex-col gap-5"
+          className="chat-body flex-1 pt-[25px] px-[22px] h-[460px] overflow-y-auto flex flex-col gap-5"
         >
           <div className="message bot-message flex items-center gap-3">
             <ChatbotIcon />
-            <p className="message-text wrap-break-word bg-[#f6f2ff] text-[15px] py-3 px-4 rounded-tl-[13px] rounded-tr-[13px] rounded-bl-[3px] rounded-br-[13px]  max-w-[75%] whitespace-pre-line">
+            <p className="message-text bg-[#f6f2ff] text-[15px] py-3 px-4 rounded-tl-[13px] rounded-tr-[13px] rounded-bl-[3px] rounded-br-[13px] max-w-[75%] whitespace-pre-line">
               Hello there 👋 <br /> How can I help you today?
             </p>
           </div>
-          {/* render the chat history dynamically */}
           {chatHistory?.map((chat, index) => (
             <ChatMessage key={index} chat={chat} />
           ))}
         </main>
 
         {/* chatbot footer */}
-        <footer className="chat-footer absolute bottom-1 w-full py-4 px-6 bg-white">
+        <footer className="chat-footer py-4 px-6 bg-white border-t border-gray-100">
           <ChatForm
             chatHistory={chatHistory}
             setChatHistory={setChatHistory}
